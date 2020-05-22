@@ -1,10 +1,11 @@
 #include "MazeApp.hpp"
 
-#include "../Utils/Logger.hpp"
-#include "../Utils/ArgsReader.hpp"
-#include "Solver/Solver.hpp"
 #include "File/FileLoader.hpp"
 #include "File/ResultsSaver.hpp"
+#include "Graphics/Drawer.hpp"
+#include "Solver/Solver.hpp"
+#include "../Utils/Logger.hpp"
+#include "../Utils/ArgsReader.hpp"
 
 namespace maze
 {
@@ -32,6 +33,10 @@ int MazeApp::run(int argc, char** argv)
     if (auto results = solver::Solver(std::move(m_flatMap), config.solver).run())
     {
         file::ResultsSaver{config.resultsFileName}.save(results);
+        if (config.isGraphicOn)
+        {
+            graphics::Drawer{_1080x1080_, _30_FPS}.display(results);
+        }
     }
     return 0;
 }

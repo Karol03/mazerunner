@@ -79,11 +79,10 @@ Result* RandomMove::solve()
         LOG("Exit not found");
     }
 
-    return new Result{std::move(pathToExit),
+    return new Result{std::move(m_flatmap),
+                      std::move(pathToExit),
                       std::move(m_discovered),
                       time.count(),
-                      m_flatmap->size().width,
-                      m_flatmap->size().height,
                       Method::ERandom};
 }
 

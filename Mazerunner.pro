@@ -4,7 +4,16 @@ CONFIG -= app_bundle
 CONFIG -= qt
 DEFINES += LOGGER_ON
 
+INCLUDEPATH += C:\SFML-2.5.1\include
+DEPENDPATH += C:\SFML-2.5.1\include
+
+LIBS += -LC:\SFML-2.5.1\lib\
+
+CONFIG(debug, debug|relase): LIBS += -lsfml-system-d -lsfml-main-d -lsfml-window-d -lsfml-graphics-d
+CONFIG(debug, debug|relase): LIBS += -lsfml-system -lsfml-main -lsfml-window -lsfml-graphics
+
 SOURCES += \
+        Maze/Graphics/Drawer.cpp \
         Maze/File/FileLoader.cpp \
         Maze/File/ResultsSaver.cpp \
         Maze/LineReader.cpp \
@@ -28,7 +37,9 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
+    Maze/Graphics/Drawer.hpp \
     Maze/File/ResultsSaver.hpp \
+    Maze/Graphics/Settings.hpp \
     Maze/Solver/Algorithms/AStar.hpp \
     Maze/Solver/Algorithms/BFS.hpp \
     Maze/Solver/Algorithms/Dijkstra.hpp \

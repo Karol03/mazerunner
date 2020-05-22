@@ -17,8 +17,11 @@ std::string Result::header()
 std::string Result::toString() const
 {
     auto result = std::stringstream{};
-    result << width << 'x' << height << " | "
-           << method << " | "
+    if (map)
+    {
+        result << map->size().width << 'x' << map->size().height << " | ";
+    }
+    result << method << " | "
            << time << " | "
            << discovered.length() << " | "
            << trace.length();
