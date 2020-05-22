@@ -33,7 +33,7 @@ Config ArgsReader::parse(int argc, char** argv)
     if (argc == 2 and strcmp(argv[1], "help") == 0)
     {
         LOG("Run the program using the console command\n",
-            "maze [file name] [solver type]\n",
+            "maze [file name] [solver type] <result file> <drawning>\n",
             "\nAvailbale solver types:\n",
             "1\tRandom steps\n2\tBFS\n3\tDFS\n4\tDijkstra\n5\tA*\n6\tD*\n");
     }
