@@ -1,0 +1,55 @@
+#include "MazeApp.hpp"
+
+#include "../Utils/Logger.hpp"
+#include "../Utils/ArgsReader.hpp"
+#include "Solver/Solver.hpp"
+#include "File/FileLoader.hpp"
+#include "File/ResultsSaver.hpp"
+
+namespace maze
+{
+
+auto MazeApp::decodeOptions(int argc, char** argv)
+{
+    return utils::ArgsReader::parse(argc, argv);
+}
+
+int MazeApp::run(int argc, char** argv)
+{
+    auto config = decodeOptions(argc, argv);
+    if (not config.isCorrect)
+    {
+        LOG("Incorrect input options");
+        return -1;
+    }
+
+    if (not readFromFile(config.fileName))
+    {
+        LOG("File cannot be parsed to the maze");
+        return -2;
+    }
+
+    if (auto results = solver::Solver(std::move(m_flatMap), config.solver).run())
+    {
+        file::ResultsSaver{config.resultsFileName}.save(results);
+    }
+    return 0;
+}
+
+bool MazeApp::readFromFile(const std::string& fileName)
+{
+    file::FileLoader file{fileName};
+    m_flatMap.reset(file.read());
+    if (m_flatMap)
+    {
+        LOG("Area read as:\n", *m_flatMap);
+    }
+    else
+    {
+        LOG("Parsing error, no FlatMap created from file", fileName);
+        return false;
+    }
+    return true;
+}
+
+}  // namespace maze
