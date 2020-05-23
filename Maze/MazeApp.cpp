@@ -35,7 +35,8 @@ int MazeApp::run(int argc, char** argv)
         file::ResultsSaver{config.resultsFileName}.save(results);
         if (config.isGraphicOn)
         {
-            graphics::Drawer{_1080x1080_, _30_FPS}.display(results);
+            // graphics config to find in Graphics/Settings.hpp
+            graphics::Drawer{_1080x1080_, _UNLIMITED_FPS}.display(results);
         }
     }
     return 0;

@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "../../../Utils/Logger.hpp"
-#include "../Tools/Random.hpp"
+#include "../../../Utils/Random.hpp"
 #include "../Tools/VisitedMap.hpp"
 #include "../Result.hpp"
 
@@ -26,10 +26,10 @@ Result* RandomMove::run()
 
 Result* RandomMove::solve()
 {
-    tools::Random randomizer;
+    auto randomizer = utils::Random{};
     auto visited = tools::VisitedMap{m_flatmap->size().width, m_flatmap->size().height};
     auto ways = std::vector<tools::Path::Point>{};
-    auto pos{0};
+    auto pos{0u};
     ways.push_back(m_flatmap->begin());
 
     auto position = m_flatmap->begin();
@@ -38,9 +38,9 @@ Result* RandomMove::solve()
     auto begin = std::chrono::high_resolution_clock::now();
     while (not ways.empty())
     {
-        pos = randomizer.get(static_cast<int>(ways.size()) - 1);
+        pos = static_cast<unsigned>(randomizer.get(static_cast<int>(ways.size() - 1)));
         position = ways[pos];
-        if (pos != ways.size() - 1)
+        if (pos + 1 != ways.size())
         {
             std::swap(ways[pos], ways[ways.size() - 1]);
         }

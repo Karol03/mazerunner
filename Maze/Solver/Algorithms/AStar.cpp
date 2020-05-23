@@ -10,6 +10,11 @@
 #include "../Tools/PriorityPoint.hpp"
 #include "../Result.hpp"
 
+using PriorityPoints = std::vector<maze::solver::tools::PriorityPoint>;
+using rprority_queue = std::priority_queue<PriorityPoints::value_type,
+                                          PriorityPoints,
+                                          std::greater<typename PriorityPoints::value_type>>;
+
 namespace maze
 {
 namespace solver
@@ -35,7 +40,7 @@ Result* AStar::solve()
 {
     auto visited = tools::VisitedMap{m_flatmap->size().width, m_flatmap->size().height};
     auto distances = tools::DistanceMap{m_flatmap->size().width, m_flatmap->size().height};
-    auto ways = std::priority_queue<tools::PriorityPoint>{};
+    auto ways = rprority_queue{};
     ways.push(m_flatmap->begin());
 
     auto position = m_flatmap->begin();

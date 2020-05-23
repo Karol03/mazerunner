@@ -16,6 +16,7 @@ public:
     PriorityPoint(Path::Point p) : point{std::move(p)} {}
     PriorityPoint(Path::Point p, unsigned c) : point{std::move(p)}, prio{c} {}
     inline bool operator<(const PriorityPoint& p) const { return prio < p.prio; }
+    inline bool operator>(const PriorityPoint& p) const { return prio > p.prio; }
 
 public:
     tools::Path::Point point;

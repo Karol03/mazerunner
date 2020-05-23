@@ -9,7 +9,7 @@
 
 #include "../../Utils/Logger.hpp"
 
-#define _3_SECONDS_ 3000u
+#define _1_SECOND_ 1000u
 
 #ifdef _WIN32
     #include <windows.h>
@@ -87,17 +87,6 @@ void draw(sf::RenderWindow* window,
     window->display();
 }
 
-double drawT(sf::RenderWindow* window,
-            sf::RectangleShape* rectangles,
-            const unsigned size)
-{
-    auto begin = std::chrono::high_resolution_clock::now();
-    draw(window, rectangles, size);
-    auto end = std::chrono::high_resolution_clock::now();
-    auto time = std::chrono::duration<double>(end - begin);
-    return time.count();
-}
-
 bool isExitPressed(sf::RenderWindow* window)
 {
     sf::Event event;
@@ -114,12 +103,13 @@ bool isExitPressed(sf::RenderWindow* window)
     return false;
 }
 
-unsigned countDelay(FrameRate framerate, double frameDrawTime)  // in ms
+unsigned countDelay(FrameRate framerate)  // in ms
 {
-    constexpr auto MAX_DELAY{100u};
-    const auto delay = static_cast<unsigned>(
-                std::abs((1.0 / framerate) - frameDrawTime) * 1000.0);
-    return std::min(MAX_DELAY, delay);
+    if (framerate == _UNLIMITED_FPS)
+    {
+        return _UNLIMITED_FPS;
+    }
+    return static_cast<unsigned>((1.0 / framerate) * 100.0);
 }
 
 void colorAsRed(sf::RectangleShape* rectangles, const unsigned number)
@@ -155,7 +145,7 @@ void presentPath(sf::RenderWindow* window,
         sleep(sleepTime);
     }
 
-    sleep(_3_SECONDS_);
+    sleep(_1_SECOND_);
 
     for (const auto& step : trace.trace())
     {
@@ -198,8 +188,8 @@ void Drawer::display(const std::unique_ptr<solver::Result>& source)
     auto rectangles = details::prepareMap(*source->map, m_resolution);
 
     const auto elements = source->map->size().width * source->map->size().height;
-    const auto framDrawTime = details::drawT(window, rectangles, elements);
-    const auto delayTime = details::countDelay(m_framerate, framDrawTime);
+    details::draw(window, rectangles, elements);
+    const auto delayTime = details::countDelay(m_framerate);
     LOG("Sleep time count as:", delayTime, "ms");
 
     details::presentPath(window, rectangles, delayTime, elements,

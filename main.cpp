@@ -1,8 +1,6 @@
-#include "Maze/MazeApp.hpp"
-
-using namespace std;
+#include "Research/Research.hpp"
 
 int main(int argc, char** argv)
 {
-    return maze::MazeApp{}.run(argc, argv);
+    return research::Research{}.run(argc, argv);
 }

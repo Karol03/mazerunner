@@ -2,6 +2,8 @@
 
 #include <sstream>
 
+constexpr auto SEPARATOR = ";";
+
 namespace maze
 {
 namespace solver
@@ -19,11 +21,11 @@ std::string Result::toString() const
     auto result = std::stringstream{};
     if (map)
     {
-        result << map->size().width << 'x' << map->size().height << " | ";
+        result << map->size().width << 'x' << map->size().height << SEPARATOR;
     }
-    result << method << " | "
-           << time << " | "
-           << discovered.length() << " | "
+    result << method << SEPARATOR
+           << time << SEPARATOR
+           << discovered.length() << SEPARATOR
            << trace.length();
     return result.str();
 }

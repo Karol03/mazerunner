@@ -4,11 +4,7 @@
 #include <chrono>
 
 
-namespace maze
-{
-namespace solver
-{
-namespace tools
+namespace utils
 {
 
 class Random
@@ -19,10 +15,10 @@ public:
         m_rng = std::mt19937(static_cast<unsigned>(current_time()));
     }
 
-    inline int get(const int max)
+    inline unsigned get(const unsigned max)
     {
         std::uniform_int_distribution<std::mt19937::result_type> dist(0, max);
-        return static_cast<int>(dist(m_rng));
+        return dist(m_rng);
     }
 
 private:
@@ -36,6 +32,4 @@ private:
     static std::mt19937 m_rng;
 };
 
-}  // namespace tools
-}  // namespace solver
-}  // namespace maze
+}  // namespace utils

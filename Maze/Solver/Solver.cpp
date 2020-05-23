@@ -49,7 +49,7 @@ void Solver::create(SolveStrategy::UniqueFlatMap ufm, Type type)
             m_strategy = std::make_unique<algorithms::AStar>(std::move(ufm));
             break;
         case maze::solver::Solver::Type::Edoubleastar:
-            m_strategy = std::make_unique<algorithms::AStar>(std::move(ufm));
+            m_strategy = std::make_unique<algorithms::DoubleAStar>(std::move(ufm));
             break;
         default:
             break;

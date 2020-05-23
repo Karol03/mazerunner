@@ -31,8 +31,14 @@ SOURCES += \
         Maze/Solver/Solver.cpp \
         Maze/Solver/Tools/DistanceMap.cpp \
         Maze/Solver/Tools/Path.cpp \
-        Maze/Solver/Tools/Random.cpp \
+        Research/Tests/Testcase.cpp \
+        Utils/Random.cpp \
         Maze/Solver/Tools/VisitedMap.cpp \
+        MazeGenerator/Core/Area.cpp \
+        MazeGenerator/Core/Builder.cpp \
+        MazeGenerator/Core/Generator.cpp \
+        MazeGenerator/MazeGenerator.cpp \
+        Research/Research.cpp \
         Utils/ArgsReader.cpp \
         main.cpp
 
@@ -54,8 +60,16 @@ HEADERS += \
     Maze/Solver/Algorithms/DFS.hpp \
     Maze/Solver/SolveStrategy.hpp \
     Maze/Solver/Tools/PriorityPoint.hpp \
-    Maze/Solver/Tools/Random.hpp \
+    Research/Tester.hpp \
+    Research/Tests/TestConfig.hpp \
+    Research/Tests/Testcase.hpp \
+    Utils/Random.hpp \
     Maze/Solver/Tools/VisitedMap.hpp \
+    MazeGenerator/Core/Area.hpp \
+    MazeGenerator/Core/Builder.hpp \
+    MazeGenerator/Core/Generator.hpp \
+    MazeGenerator/MazeGenerator.hpp \
+    Research/Research.hpp \
     Utils/ArgsReader.hpp \
     Utils/Config.hpp \
     Utils/Logger.hpp \
