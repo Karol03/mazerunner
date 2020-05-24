@@ -12,3 +12,5 @@
 
 constexpr auto DRAWNING_ON{true};
 constexpr auto DRAWNING_OFF{false};
+
+#define TESTCASE(...) tester.add(Testcase{__VA_ARGS__})
