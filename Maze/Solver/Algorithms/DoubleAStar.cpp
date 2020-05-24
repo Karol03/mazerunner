@@ -38,10 +38,11 @@ Result* DoubleAStar::run()
 
 Result* DoubleAStar::solve()
 {
-    auto
-    auto visited = tools::VisitedMap{m_flatmap->size().width, m_flatmap->size().height};
+    auto visitedBegin = tools::VisitedMap{m_flatmap->size().width, m_flatmap->size().height};
+    auto visitedEnd = tools::VisitedMap{m_flatmap->size().width, m_flatmap->size().height};
     auto distances = tools::DistanceMap{m_flatmap->size().width, m_flatmap->size().height};
 
+    auto pathToExit = tools::Path{};
     auto startways = rprority_queue{};
     startways.push(m_flatmap->begin());
 
@@ -49,55 +50,78 @@ Result* DoubleAStar::solve()
     endways.push(m_flatmap->end());
 
     auto startposition = m_flatmap->begin();
-    auto endposition = m_flatmap->begin();
+    auto endposition = m_flatmap->end();
 
     const auto& endpoint = m_flatmap->end();
-    visited.visit(startposition, {0, 0});
+    visitedBegin.visit(startposition, {0, 0});
     distances(startposition) = 0;
 
-    visited.visit(endposition, {0, 0});
+    visitedEnd.visit(endposition, {0, 0});
     distances(endposition) = 0;
 
     m_discovered.save(startposition);
     m_discovered.save(endposition);
+    auto end = std::chrono::high_resolution_clock::now();
     auto begin = std::chrono::high_resolution_clock::now();
     while (not startways.empty() and not endways.empty())
     {
         startposition = startways.top().point;
         startways.pop();
 
-        if (startposition == endposition)
+        if (visitedEnd.isVisited(startposition))
         {
-            // .. found from begin
+            pathToExit = visitedBegin.path(startposition);
+            pathToExit.merge(visitedEnd.path(startposition));
+            end = std::chrono::high_resolution_clock::now();
+            goto finish;
         }
 
-        for (const auto& adjacent : m_flatmap->adjacent(position))
+        for (const auto& adjacent : m_flatmap->adjacent(startposition))
         {
-            auto adjDistance = distances(position) + ONE_STEP_COST;
-            if (not visited.isVisited(adjacent) or adjDistance < distances(adjacent))
+            auto adjDistance = distances(startposition) + ONE_STEP_COST;
+            if (not visitedBegin.isVisited(adjacent) or adjDistance < distances(adjacent))
             {
                 distances(adjacent) = adjDistance;
                 auto priority = adjDistance + endpoint.manhattanDistance(adjacent);
 
-                ways.push({adjacent, priority});
-                visited.visit(adjacent, position);
+                startways.push({adjacent, priority});
+                visitedBegin.visit(adjacent, startposition);
                 m_discovered.save(adjacent);
             }
         }
 
         endposition = endways.top().point;
         endways.pop();
+        if (visitedBegin.isVisited(endposition))
+        {
+            pathToExit = visitedBegin.path(endposition);
+            pathToExit.merge(visitedEnd.path(endposition));
+            end = std::chrono::high_resolution_clock::now();
+            goto finish;
+        }
 
+        for (const auto& adjacent : m_flatmap->adjacent(endposition))
+        {
+            auto adjDistance = distances(endposition) + ONE_STEP_COST;
+            if (not visitedEnd.isVisited(adjacent) or adjDistance < distances(adjacent))
+            {
+                distances(adjacent) = adjDistance;
+                auto priority = adjDistance + endpoint.manhattanDistance(adjacent);
+
+                endways.push({adjacent, priority});
+                visitedEnd.visit(adjacent, endposition);
+                m_discovered.save(adjacent);
+            }
+        }
     }
-    auto end = std::chrono::high_resolution_clock::now();
+    end = std::chrono::high_resolution_clock::now();
+    finish:
     auto time = std::chrono::duration<double>(end - begin);
-    auto pathToExit = tools::Path{};
 
     LOG("Finished\nDiscovered [", m_discovered.length() ,"] blocks in ", time.count(), " seconds\n",
         "Exploring path: ", m_discovered.toString());
-    if (position == m_flatmap->end())
+    if (pathToExit.length() > 0)
     {
-        pathToExit = visited.path(position);
         LOG("Exit found\nPath to exit goes through: ", pathToExit.toString());
     }
     else

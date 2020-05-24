@@ -45,6 +45,11 @@ public:
         std::reverse(m_trace.begin(), m_trace.end());
     }
 
+    inline void merge(const Path& path)
+    {
+        m_trace.insert(m_trace.end(), path.m_trace.rbegin(), path.m_trace.rend());
+    }
+
     std::string toString() const;
 
 private:

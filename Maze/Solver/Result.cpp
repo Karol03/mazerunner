@@ -12,7 +12,9 @@ namespace solver
 std::string Result::header()
 {
     auto result = std::stringstream{};
-    result << "w x h | method | time (s) | discovered blocks | path length";
+    result << "w x h" << SEPARATOR << "algorithm" << SEPARATOR
+           << "time (s)" << SEPARATOR << "discovered blocks" << SEPARATOR
+           << "path length";
     return result.str();
 }
 

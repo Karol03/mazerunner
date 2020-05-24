@@ -48,7 +48,7 @@ bool ResultsSaver::isEmpty(std::ofstream& file) const
 
 void ResultsSaver::addHeader(std::ofstream& file) const
 {
-    file << "# " << solver::Result::header() << '\n';
+    file << solver::Result::header() << '\n';
 }
 
 }  // namespace file
