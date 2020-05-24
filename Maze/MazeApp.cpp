@@ -48,14 +48,11 @@ bool MazeApp::readFromFile(const std::string& fileName)
     m_flatMap.reset(file.read());
     if (m_flatMap)
     {
-        LOG("Area read as:\n", *m_flatMap);
+        LOG("Maze correctly read from file \"", fileName, "\"");
+        return true;
     }
-    else
-    {
-        LOG("Parsing error, no FlatMap created from file", fileName);
-        return false;
-    }
-    return true;
+    LOG("Parsing error, no FlatMap created from file", fileName);
+    return false;
 }
 
 }  // namespace maze
