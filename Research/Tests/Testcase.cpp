@@ -126,9 +126,10 @@ bool Testcase::run()
 {
     LOG("[TESTRUN - START] ", m_title);
     auto result{false};
-    auto file{nextFilename()};
+    auto file{m_mConfig.ownMazeName.empty() ? nextFilename() : m_mConfig.ownMazeName};
 
-    if (prepareMaze(file))
+
+    if (not m_mConfig.ownMazeName.empty() or prepareMaze(file))
     {
         for (auto i{1u}; i <= SOLVING_METHODS_NUMBER; ++i)
         {

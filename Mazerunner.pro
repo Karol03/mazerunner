@@ -60,6 +60,7 @@ HEADERS += \
     Maze/Solver/Algorithms/DFS.hpp \
     Maze/Solver/SolveStrategy.hpp \
     Maze/Solver/Tools/PriorityPoint.hpp \
+    Research/ResearchMacros.hpp \
     Research/Tester.hpp \
     Research/Tests/TestConfig.hpp \
     Research/Tests/Testcase.hpp \

@@ -12,6 +12,7 @@ using Coordinates = std::pair<unsigned, unsigned>;
 
 struct MazeConfig
 {
+    std::string ownMazeName{};
     Coordinates size{};
     Coordinates beginPoint{};
     Coordinates endPoint{};

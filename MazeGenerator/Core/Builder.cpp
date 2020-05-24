@@ -1,5 +1,6 @@
 #include "Builder.hpp"
 
+#include "../../Utils/Logger.hpp"
 #include "../../Utils/Random.hpp"
 
 namespace mazegenerator
