@@ -47,7 +47,9 @@ public:
 
     inline void merge(const Path& path)
     {
-        m_trace.insert(m_trace.end(), path.m_trace.rbegin(), path.m_trace.rend());
+        auto trace = path.trace();
+        trace.pop_back();
+        m_trace.insert(m_trace.end(), trace.rbegin(), trace.rend());
     }
 
     std::string toString() const;
