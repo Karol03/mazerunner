@@ -12,13 +12,16 @@ class Drawer
 {
 public:
     Drawer(Resolution resolution = _800x600_,
-           FrameRate frames = _30_FPS);
+           DrawSpeed drawSpeed = DRAW_NORMAL);
 
     void display(const std::unique_ptr<solver::Result>& source);
 
 private:
+    unsigned frameDelay(int drawspeed);
+
+private:
     Resolution m_resolution;
-    FrameRate m_framerate;
+    DrawSpeed m_drawSpeed;
 };
 
 }  // namspace graphics

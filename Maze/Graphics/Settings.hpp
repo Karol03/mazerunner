@@ -2,11 +2,9 @@
 
 #include <utility>
 
-#define _2_FPS 2.0
-#define _5_FPS 5.0
-#define _10_FPS 10.0
-#define _30_FPS 30.0
-#define _UNLIMITED_FPS 0.0
+#define DRAW_SLOW   0
+#define DRAW_NORMAL 1
+#define DRAW_FAST   2
 
 #define _600x600_ maze::graphics::Resolution{600, 600}
 #define _640x480_ maze::graphics::Resolution{640, 480}
@@ -21,7 +19,7 @@ namespace maze
 namespace graphics
 {
 
-using FrameRate = double;
+using DrawSpeed = int;
 using Resolution = std::pair<unsigned, unsigned>;
 
 }  // namespace graphics

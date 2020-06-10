@@ -27,6 +27,11 @@ bool ArgsReader::isGraphicOn(char** argv)
     return graphicFlag == 1;
 }
 
+int ArgsReader::readDrawSpeed(char** argv)
+{
+    return std::atoi(argv[5]);
+}
+
 Config ArgsReader::parse(int argc, char** argv)
 {
     Config config;
@@ -56,6 +61,9 @@ Config ArgsReader::parse(int argc, char** argv)
                 break;
             case 4:
                 config.isGraphicOn = isGraphicOn(argv);
+                break;
+            case 5:
+                config.drawSpeed = readDrawSpeed(argv);
                 break;
             }
         }

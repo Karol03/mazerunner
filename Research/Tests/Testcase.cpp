@@ -26,7 +26,8 @@ bool Testcase::prepareNthArgs(const unsigned n,
                               const std::string& resultfilename,
                               const std::string& method,
                               const std::string& logfilename,
-                              const std::string& isDrawing)
+                              const std::string& isDrawing,
+                              const std::string& drawSpeed)
 {
     constexpr auto MIN_ARGS_NUMBER{3};
     if (n < MIN_ARGS_NUMBER)
@@ -63,6 +64,10 @@ bool Testcase::prepareNthArgs(const unsigned n,
             m_argv[i] = new char[isDrawing.size() + 1];
             strcpy_s(m_argv[i], isDrawing.size() + 1, isDrawing.c_str());
         break;
+        case 5:
+            m_argv[i] = new char[drawSpeed.size() + 1];
+            strcpy_s(m_argv[i], drawSpeed.size() + 1, drawSpeed.c_str());
+        break;
         }
     }
     return true;
@@ -89,13 +94,14 @@ bool Testcase::prepareArgs(const std::string& filename,
         ++args;
         if (m_tConfig.isDrawingOn)
         {
-            ++args;
+            args += 2;
         }
     }
 
     return prepareNthArgs(args, filename, std::to_string(method),
                           m_tConfig.resultsFileName,
-                          std::to_string(m_tConfig.isDrawingOn));
+                          std::to_string(m_tConfig.isDrawingOn),
+                          std::to_string(static_cast<int>(m_tConfig.drawSpeed)));
 }
 
 void Testcase::clearArgs()

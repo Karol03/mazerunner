@@ -2,6 +2,7 @@ TEMPLATE = app
 CONFIG += console c++17
 CONFIG -= app_bundle
 CONFIG -= qt
+
 DEFINES += LOGGER_ON
 #DEFINES += LOG_SAVE_TO_FILE
 

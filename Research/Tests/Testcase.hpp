@@ -24,7 +24,8 @@ private:
                         const std::string& resultfilename,
                         const std::string& method,
                         const std::string& logfilename,
-                        const std::string& isDrawing);
+                        const std::string& isDrawing,
+                        const std::string& drawSpeed);
 
     bool prepareMaze(std::string filename);
 

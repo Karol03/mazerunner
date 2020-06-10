@@ -11,8 +11,9 @@ public:
     static Config parse(int argc, char** argv);
 
 private:
-    static int readSolver(char** argv);
     static bool isGraphicOn(char** argv);
+    static int readDrawSpeed(char** argv);
+    static int readSolver(char** argv);
 };
 
 }  // namespace utils
