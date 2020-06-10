@@ -19,6 +19,7 @@ argv[1] - file containing prepared maze,<br />
 argv[2] - solving method,<br />
 argv[3] - file for save results <optional>,<br />
 argv[4] - draw the solving <optional><br />
+argv[5] - speed of drawning (0 - slow, 1 - normal, 2 - fast) <optional><br />
 
 <h3>Maze file structure:
 </h3>
